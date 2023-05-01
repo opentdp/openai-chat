@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="mb-3">
+        <div class="mb-3">
+            <textarea class="form-control" v-model="message" placeholder="请输入 API-KEY，必须包含 sk-，多个可直接粘贴"></textarea>
+        </div>
+        <button class="btn btn-primary" @click="submit">查询</button>
+    </div>
+    <div v-if="items.length > 0" class="card mb-3">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">API KEY</th>
+                        <th scope="col">过期时间</th>
+                        <th scope="col">总额度</th>
+                        <th scope="col">已使用</th>
+                        <th scope="col">剩余量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item,k in items">
+                        <th scope="row">{{k+1}}</th>
+                        <td scope="col">{{item.mask}}</td>
+                        <td scope="col">{{item.access_until || item.status}}</td>
+                        <td scope="col">{{item.hard_limit_usd}}</td>
+                        <td scope="col">{{item.total_usage}}</td>
+                        <td scope="col">{{item.left_quota}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
