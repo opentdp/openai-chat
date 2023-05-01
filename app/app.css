@@ -1,0 +1,11 @@
+:root {
+  --bs-body-font-family: '-apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif';
+}
+
+app-root a {
+  text-decoration: none;
+}
+
+app-root textarea {
+  height: 20vh;
+}
