@@ -28,7 +28,7 @@ export default async () => {
                 });
                 // 获取余额
                 this.items.forEach(async item => {
-                    const res = await fetch('https://openai.tdp.icu/usage/' + item.key).then(res => res.json()).catch(() => {
+                    const res = await fetch('/usage/' + item.key).then(res => res.json()).catch(() => {
                         item.status = '查询失败';
                     });
                     Object.assign(item, res);
