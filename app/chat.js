@@ -13,7 +13,7 @@ export default async () => {
                     bot: 'assets/images/icon.svg',
                     user: 'assets/images/avatar.jpg',
                 },
-                authkey: ''
+                authkey: 'key-of-sponsor'
             };
         },
         methods: {
