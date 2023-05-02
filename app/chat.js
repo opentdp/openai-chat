@@ -24,6 +24,7 @@ export default async () => {
                 this.items.push({ role: 'user', content: this.message })
                 const item = await this.chatbot().catch(e => this.error = e).finally(() => this.loading = false)
                 if (item && item.role && item.content) {
+                    item.content = marked.parse(item.content)
                     this.items.push(item)
                     this.message = ''
                 }
