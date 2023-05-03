@@ -2,13 +2,13 @@
     <div v-if="items.length > 0" class="list-group mb-3">
         <div v-for="item, k of items" :key="k" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{item.role}}</h5>
+                <h4 class="mb-1">{{item.role == 'user' ? 'Me' : 'Bot' }}</h4>
             </div>
             <p class="mb-1" v-html="item.content"></p>
         </div>
         <div v-if="loading" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">assistant</h5>
+                <h5 class="mb-1">Bot</h5>
             </div>
             <p class="mb-1">正在生成 ...</p>
         </div>
@@ -19,8 +19,8 @@
             <textarea class="form-control" rows="5" v-model="message"></textarea>
         </div>
         <div class="d-grid gap-2 d-sm-block">
-            <button type="button" class="btn btn-primary me-sm-3" @click="submit">发送</button>
-            <button type="button" class="btn btn-danger" @click="clear">清除记录</button>
+            <button class="btn btn-primary me-sm-3" :disabled="loading || !message" @click="submit">发送</button>
+            <button class="btn btn-danger" :disabled="loading || items.length == 0" @click="clear">清除记录</button>
         </div>
     </div>
 </div>

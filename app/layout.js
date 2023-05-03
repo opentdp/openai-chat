@@ -5,8 +5,22 @@ export default async () => {
     return {
         data() {
             return {
-                title: 'OpenAI API 余额查询',
+                messages: [],
             };
+        },
+        created() {
+            window.addEventListener("unhandledrejection", event => {
+                event.preventDefault && event.preventDefault()
+                this.createMessage(event.reason)
+            })
+        },
+        methods: {
+            createMessage(message) {
+                this.messages.push({ index: Date.now(), content: message })
+            },
+            removeMessage(index) {
+                this.messages = this.messages.filter(m => m.index !== index)
+            }
         },
         template: tpl,
     };

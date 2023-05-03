@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light mb-3">
     <div class="container-fluid">
-        <a class="navbar-brand">
+        <a class="navbar-brand" href="https://docs.opentdp.org" target="_blank">
             <img src="assets/images/logo.svg" style="height: 50px" />
         </a>
 
@@ -20,5 +20,14 @@
         </div>
     </div>
 </nav>
+
+<div class="d-grid gap-2 position-fixed top-0 end-0 z-3 p-3" v-if="messages.length > 0">
+    <div v-for="item in messages" :key="item.index" class="toast align-items-center show">
+        <div class="d-flex">
+            <div class="toast-body">{{ item.content }}</div>
+            <button class="btn-close me-2 m-auto" @click="removeMessage(item.index)"></button>
+        </div>
+    </div>
+</div>
 
 <router-view></router-view>

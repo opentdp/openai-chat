@@ -2,6 +2,10 @@
   --bs-body-font-family: '-apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif';
 }
 
-app-root a {
+a {
   text-decoration: none;
+}
+
+.z-3 {
+  z-index: 1030;
 }

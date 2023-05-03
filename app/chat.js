@@ -22,17 +22,12 @@ export default async () => {
                 this.error = ''
                 this.loading = true
                 this.items.push({ role: 'user', content: this.message })
-                const item = await this.chatbot().catch(e => this.error = e).finally(() => this.loading = false)
+                this.message = '' // 清空输入框内的消息，防止重复发送
+                const item = await openai.chat(this.items).finally(() => this.loading = false)
                 if (item && item.role && item.content) {
                     item.content = marked.parse(item.content)
                     this.items.push(item)
-                    this.message = ''
                 }
-            },
-            async chatbot() {
-                const data = { model: 'gpt-3.5-turbo', messages: this.items }
-                const resp = await openai.fetch('chat/completions', data)
-                return resp.choices[0].message
             },
             clear() {
                 this.items = []

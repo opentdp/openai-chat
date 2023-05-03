@@ -17,7 +17,23 @@ export default {
             opts.body = JSON.stringify(body);
         }
 
-        return fetch(this.baseApi + path, opts).then(r => r.json());
+        return fetch(this.baseApi + path, opts).then(async r => {
+            const data = await r.json();
+            if (!r.ok) {
+                if (data && data.error) {
+                    throw new Error(data.error.message);
+                }
+                throw new Error(r.statusText || '请求失败');
+            }
+            return data
+        })
+    },
+
+    async chat(messages, model, key) {
+        const data = { model: model || 'gpt-3.5-turbo', messages }
+        const resp = await this.fetch('chat/completions', data, key)
+
+        return resp.choices[0].message
     },
 
     async usage(key) {

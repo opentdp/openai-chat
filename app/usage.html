@@ -3,7 +3,7 @@
         <div class="mb-3">
             <textarea class="form-control" rows="5" placeholder="请输入 API-KEY，必须包含 sk-，多个可直接粘贴" v-model="message"></textarea>
         </div>
-        <button class="btn btn-primary" @click="submit">查询</button>
+        <button class="btn btn-primary" :disabled="!message" @click="submit">查询</button>
     </div>
     <div v-if="items.length > 0" class="card mb-3">
         <div class="card-body">
