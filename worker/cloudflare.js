@@ -22,7 +22,9 @@ async function openai_key(request, env) {
 async function openai_proxy(request, env) {
     const url = new URL(request.url);
     const auth = await openai_key(request, env);
-    const backend = request.url.replace(url.host, 'api.openai.com');
+    const backend = request.url
+        .replace('/openai/v1/', '/v1/')
+        .replace(url.host, 'api.openai.com');
     const payload = {
         method: request.method,
         headers: { Authorization: auth },

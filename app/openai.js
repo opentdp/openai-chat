@@ -1,5 +1,5 @@
 export default {
-    baseApi: 'https://openai.tdp.icu/v1/',
+    baseApi: 'https://api.tdp.icu/openai/v1/',
     defaultKey: 'key-of-sponsor',
 
     async fetch(path, body, key) {
