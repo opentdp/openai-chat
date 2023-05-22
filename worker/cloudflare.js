@@ -7,7 +7,7 @@
 async function openai_key(request, env) {
     let auth = request.headers.get('Authorization');
 
-    if (auth == 'Bearer key-of-sponsor') {
+    if (auth == 'Bearer sk-of-opentdp-sponsor') {
         const keys = await env.storage.get('keys');
         if (keys) {
             const keylist = keys.trim().split('\n');
