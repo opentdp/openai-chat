@@ -1,5 +1,5 @@
 export default {
-    baseApi: 'https://api.tdp.icu/openai/v1/',
+    baseApi: 'https://api.tdp.icu/openai/v1',
     defaultKey: 'sk-of-opentdp-sponsor',
 
     async fetch(path, body, key) {
@@ -31,7 +31,7 @@ export default {
 
     async chat(messages, model, key) {
         const data = { model: model || 'gpt-3.5-turbo', messages }
-        const resp = await this.fetch('chat/completions', data, key)
+        const resp = await this.fetch('/chat/completions', data, key)
 
         return resp.choices[0].message
     },
@@ -43,13 +43,13 @@ export default {
             return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
         };
 
-        const subscription = await this.fetch('dashboard/billing/subscription', null, key);
+        const subscription = await this.fetch('/dashboard/billing/subscription', null, key);
 
         const start_date = subscription.hard_limit_usd > 20
             ? [today.getFullYear(), today.getMonth() + 1, '1'].join('-') : formatDate(today / 1000 - 90 * 86400);
         const end_date = formatDate(today / 1000 + 86400);
 
-        const usage = await this.fetch(`dashboard/billing/usage?start_date=${start_date}&end_date=${end_date}`, null, key);
+        const usage = await this.fetch(`/dashboard/billing/usage?start_date=${start_date}&end_date=${end_date}`, null, key);
 
         return {
             access_until: formatDate(subscription.access_until),
