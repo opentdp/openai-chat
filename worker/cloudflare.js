@@ -1,14 +1,23 @@
 /**
  * @auther Rehiy
  * @url https://www.rehiy.com/post/500
- * @description env.storage.get('keys') 为存储的key列表，每行一个key
+ * @description storage.get('keys') 为存储的key列表，每行一个key
  */
 
-async function openai_key(request, env) {
+function header_cors() {
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS',
+    };
+    return new Response(null, { headers });
+}
+
+async function openai_key(request, storage) {
     let auth = request.headers.get('Authorization');
 
     if (auth == 'Bearer sk-of-opentdp-sponsor') {
-        const keys = await env.storage.get('keys');
+        const keys = await storage.get('keys');
         if (keys) {
             const keylist = keys.trim().split('\n');
             const sortkey = Math.floor(Math.random() * keylist.length);
@@ -19,9 +28,9 @@ async function openai_key(request, env) {
     return auth;
 }
 
-async function openai_proxy(request, env) {
+async function openai_proxy(request, storage) {
     const url = new URL(request.url);
-    const auth = await openai_key(request, env);
+    const auth = await openai_key(request, storage);
     const backend = request.url
         .replace('/openai/v1/', '/v1/')
         .replace(url.host, 'api.openai.com');
@@ -43,13 +52,8 @@ async function openai_proxy(request, env) {
 export default {
     async fetch(request, env) {
         if (request.method === 'OPTIONS') {
-            const corsHeaders = {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS',
-                'Access-Control-Allow-Headers': '*',
-            };
-            return new Response(null, { headers: corsHeaders });
+            return header_cors();
         }
-        return openai_proxy(request, env);
+        return openai_proxy(request, env.storage);
     }
 }
