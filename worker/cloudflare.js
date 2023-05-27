@@ -21,6 +21,7 @@ async function github_proxy(request) {
     });
 
     const headers = new Headers();
+    headers.set('Cache-Control', 'public, max-age=86400');
     header_content_type(headers, url.pathname);
 
     return new Response(res.body, {
