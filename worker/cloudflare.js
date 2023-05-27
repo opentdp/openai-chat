@@ -1,59 +1,90 @@
 /**
  * @auther Rehiy
- * @url https://www.rehiy.com/post/500
- * @description storage.get('keys') 为存储的key列表，每行一个key
+ * @url https://github.com/open-tdp/openai-chat
  */
 
-function header_cors() {
-    const headers = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS',
-    };
-    return new Response(null, { headers });
-}
+const GITHUB_URL = 'https://raw.githubusercontent.com/open-tdp/openai-chat/master';
 
-async function openai_key(request, storage) {
-    let auth = request.headers.get('Authorization');
-
-    if (auth == 'Bearer sk-of-opentdp-sponsor') {
-        const keys = await storage.get('keys');
-        if (keys) {
-            const keylist = keys.trim().split('\n');
-            const sortkey = Math.floor(Math.random() * keylist.length);
-            auth = 'Bearer ' + keylist[sortkey];
-        }
-    }
-
-    return auth;
-}
-
-async function openai_proxy(request, storage) {
+async function github_proxy(request) {
     const url = new URL(request.url);
-    const auth = await openai_key(request, storage);
-    const backend = request.url
-        .replace('/openai/v1/', '/v1/')
-        .replace(url.host, 'api.openai.com');
-    const payload = {
-        method: request.method,
-        headers: { Authorization: auth },
-    };
 
-    if (request.body) {
-        payload.body = await request.text();
-        payload.headers['Content-Type'] = 'application/json';
+    let backend = GITHUB_URL + url.pathname;
+    if (url.pathname.endsWith('/')) {
+        backend += 'index.html';
     }
 
-    return fetch(backend, payload);
+    const res = await fetch(backend, {
+        method: request.method,
+        headers: {
+            'User-Agent': request.headers.get('User-Agent'),
+        },
+    });
+
+    const headers = new Headers();
+    header_content_type(headers, url.pathname);
+
+    return new Response(res.body, {
+        status: res.status,
+        headers,
+    });
+}
+
+function header_content_type(headers, pathname) {
+    const ext = pathname.split('.').pop();
+    switch (ext) {
+        case 'json':
+            headers.set('Content-Type', 'application/json');
+            break;
+        case 'js':
+            headers.set('Content-Type', 'application/javascript');
+            break;
+        case 'css':
+            headers.set('Content-Type', 'text/css');
+            break;
+        case 'xml':
+            headers.set('Content-Type', 'text/xml');
+            break;
+        case 'html':
+            headers.set('Content-Type', 'text/html');
+            break;
+        case 'webm':
+            headers.set('Content-Type', 'video/webm');
+            break;
+        case 'mp3':
+            headers.set('Content-Type', 'audio/mpeg');
+            break;
+        case 'mp4':
+            headers.set('Content-Type', 'video/mp4');
+            break;
+        case 'webp':
+            headers.set('Content-Type', 'image/webp');
+            break;
+        case 'gif':
+            headers.set('Content-Type', 'image/gif');
+            break;
+        case 'png':
+            headers.set('Content-Type', 'image/png');
+            break;
+        case 'jpg':
+        case 'jpeg':
+            headers.set('Content-Type', 'image/jpeg');
+            break;
+        case 'svg':
+            headers.set('Content-Type', 'image/svg+xml');
+            break;
+        case 'ico':
+            headers.set('Content-Type', 'image/x-icon');
+            break;
+        case 'txt':
+            headers.set('Content-Type', 'text/plain');
+            break;
+    }
 }
 
 // esmodule
 
 export default {
     async fetch(request, env) {
-        if (request.method === 'OPTIONS') {
-            return header_cors();
-        }
-        return openai_proxy(request, env.storage);
+        return github_proxy(request);
     }
 }
