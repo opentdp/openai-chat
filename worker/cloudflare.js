@@ -48,7 +48,7 @@ function file_type(pathname) {
         'jpeg': 'image/jpeg',
         'svg': 'image/svg+xml',
         'ico': 'image/x-icon',
-    }
+    };
     return mines[ext] || 'text/plain';
 }
 
