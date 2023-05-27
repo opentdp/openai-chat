@@ -21,7 +21,7 @@ async function github_proxy(request) {
     });
 
     const headers = new Headers();
-    headers.set('Content-Type', file_type(url.pathname));
+    headers.set('Content-Type', file_type(backend));
     headers.set('Cache-Control', 'public, max-age=86400');
 
     return new Response(res.body, {
@@ -30,8 +30,8 @@ async function github_proxy(request) {
     });
 }
 
-function file_type(pathname) {
-    const ext = pathname.split('.').pop();
+function file_type(url) {
+    const ext = url.split('?').shift().split('.').pop();
     const mines = {
         'json': 'application/json',
         'js': 'application/javascript',
