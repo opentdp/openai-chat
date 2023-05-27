@@ -21,8 +21,8 @@ async function github_proxy(request) {
     });
 
     const headers = new Headers();
+    headers.set('Content-Type', file_type(url.pathname));
     headers.set('Cache-Control', 'public, max-age=86400');
-    header_content_type(headers, url.pathname);
 
     return new Response(res.body, {
         status: res.status,
@@ -30,56 +30,26 @@ async function github_proxy(request) {
     });
 }
 
-function header_content_type(headers, pathname) {
+function file_type(pathname) {
     const ext = pathname.split('.').pop();
-    switch (ext) {
-        case 'json':
-            headers.set('Content-Type', 'application/json');
-            break;
-        case 'js':
-            headers.set('Content-Type', 'application/javascript');
-            break;
-        case 'css':
-            headers.set('Content-Type', 'text/css');
-            break;
-        case 'xml':
-            headers.set('Content-Type', 'text/xml');
-            break;
-        case 'html':
-            headers.set('Content-Type', 'text/html');
-            break;
-        case 'webm':
-            headers.set('Content-Type', 'video/webm');
-            break;
-        case 'mp3':
-            headers.set('Content-Type', 'audio/mpeg');
-            break;
-        case 'mp4':
-            headers.set('Content-Type', 'video/mp4');
-            break;
-        case 'webp':
-            headers.set('Content-Type', 'image/webp');
-            break;
-        case 'gif':
-            headers.set('Content-Type', 'image/gif');
-            break;
-        case 'png':
-            headers.set('Content-Type', 'image/png');
-            break;
-        case 'jpg':
-        case 'jpeg':
-            headers.set('Content-Type', 'image/jpeg');
-            break;
-        case 'svg':
-            headers.set('Content-Type', 'image/svg+xml');
-            break;
-        case 'ico':
-            headers.set('Content-Type', 'image/x-icon');
-            break;
-        case 'txt':
-            headers.set('Content-Type', 'text/plain');
-            break;
+    const mines = {
+        'json': 'application/json',
+        'js': 'application/javascript',
+        'css': 'text/css',
+        'xml': 'text/xml',
+        'html': 'text/html',
+        'webm': 'video/webm',
+        'mp3': 'audio/mpeg',
+        'mp4': 'video/mp4',
+        'webp': 'image/webp',
+        'gif': 'image/gif',
+        'png': 'image/png',
+        'jpg': 'image/jpeg',
+        'jpeg': 'image/jpeg',
+        'svg': 'image/svg+xml',
+        'ico': 'image/x-icon',
     }
+    return mines[ext] || 'text/plain';
 }
 
 // esmodule
