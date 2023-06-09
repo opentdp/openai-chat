@@ -9,6 +9,7 @@ export default async () => {
             return {
                 items: [],
                 message: '',
+                validkeys: [],
             };
         },
         methods: {
@@ -35,8 +36,19 @@ export default async () => {
                     const res = await openai.usage(item.key).catch(() => {
                         item.status = '查询失败';
                     });
+                    if (res.status != '查询失败') {
+                        this.validkeys.push(item.key);
+                    }
                     Object.assign(item, res);
                 });
+            },
+            copy() {
+                const text = this.validkeys.join('\n');
+                const element = createElement(text);
+                element.select();
+                element.setSelectionRange(0, element.value.length);
+                document.execCommand('copy');
+                element.remove();
             },
         },
         template: tpl,

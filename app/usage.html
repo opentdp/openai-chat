@@ -5,6 +5,7 @@
                 v-model="message"></textarea>
         </div>
         <button class="btn btn-primary" :disabled="!message" @click="submit">查询</button>
+        <button class="btn btn-primary" :disabled="!message" @click="copy">复制有效KEY</button>
     </div>
     <div v-if="items.length > 0" class="card mb-3">
         <div class="card-body">
