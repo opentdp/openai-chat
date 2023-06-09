@@ -13,6 +13,10 @@ export default async () => {
             };
         },
         methods: {
+            clear() {
+                const text = this.validkeys.join('\n');
+                this.message = text;
+            },
             submit() {
                 this.items = [];
                 // 获取密钥
@@ -41,14 +45,6 @@ export default async () => {
                     }
                     Object.assign(item, res);
                 });
-            },
-            copy() {
-                const text = this.validkeys.join('\n');
-                const element = createElement(text);
-                element.select();
-                element.setSelectionRange(0, element.value.length);
-                document.execCommand('copy');
-                element.remove();
             },
         },
         template: tpl,
