@@ -1,7 +1,8 @@
 <div class="container-fluid">
     <div class="mb-3">
         <div class="mb-3">
-            <textarea class="form-control" rows="5" placeholder="请输入 API-KEY，必须包含 sk-，多个可直接粘贴" v-model="message"></textarea>
+            <textarea class="form-control" rows="5" placeholder="请输入 API-KEY，必须包含 sk-，多个可直接粘贴"
+                v-model="message"></textarea>
         </div>
         <button class="btn btn-primary" :disabled="!message" @click="submit">查询</button>
     </div>
@@ -12,6 +13,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">API KEY</th>
+                        <th scope="col">GPT-3.5</th>
+                        <th scope="col">GPT-4</th>
                         <th scope="col">过期时间</th>
                         <th scope="col">总额度</th>
                         <th scope="col">已使用</th>
@@ -22,6 +25,8 @@
                     <tr v-for="item,k in items">
                         <th scope="row">{{k+1}}</th>
                         <td scope="col">{{item.mask}}</td>
+                        <td scope="col">{{item.model_gpt3 ? 'Y' : 'N'}}</td>
+                        <td scope="col">{{item.model_gpt4 ? 'Y' : 'N'}}</td>
                         <td scope="col">{{item.access_until || item.status}}</td>
                         <td scope="col">{{item.hard_limit_usd}}</td>
                         <td scope="col">{{item.total_usage}}</td>
