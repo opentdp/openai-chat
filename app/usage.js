@@ -10,13 +10,10 @@ export default async () => {
                 items: [],
                 message: '',
                 validkeys: [],
+                placeholder: '请输入 API-KEY，必须包含 sk-，多个可直接粘贴'
             };
         },
         methods: {
-            clear() {
-                const text = this.validkeys.join('\n');
-                this.message = text;
-            },
             submit() {
                 this.items = [];
                 // 获取密钥
@@ -40,11 +37,15 @@ export default async () => {
                     const res = await openai.usage(item.key).catch(() => {
                         item.status = '查询失败';
                     });
-                    if (res.status != '查询失败') {
+                    if (res.left_quota > 0) {
                         this.validkeys.push(item.key);
                     }
                     Object.assign(item, res);
                 });
+            },
+            clear() {
+                const text = this.validkeys.join('\n');
+                this.message = text;
             },
         },
         template: tpl,
