@@ -45,7 +45,11 @@ export default async () => {
             },
             clear() {
                 const text = this.validkeys.join('\n');
-                this.message = text;
+                if (this.message != text) {
+                    this.message = text;
+                    throw new Error('清理完成');
+                }
+                throw new Error('无需清理');
             },
         },
         template: tpl,
