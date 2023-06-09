@@ -52,8 +52,8 @@ export default {
         const usage = await this.fetch(`/dashboard/billing/usage?start_date=${start_date}&end_date=${end_date}`, null, key);
 
         const models_obj = await this.fetch('/models', null, key);
-        const model_gpt3 = models_obj.data.some(model => model.id === 'gpt-3.5-turbo');
-        const model_gpt4 = models_obj.data.some(model => model.id === 'gpt-4');
+        const model_gpt3 = models_obj.data.some(model => model.id === 'gpt-3.5-turbo') ? 'Y' : 'N';
+        const model_gpt4 = models_obj.data.some(model => model.id === 'gpt-4') ? 'Y' : 'N';
 
         return {
             access_until: formatDate(subscription.access_until),

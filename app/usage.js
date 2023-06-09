@@ -24,6 +24,8 @@ export default async () => {
                             hard_limit_usd: '',
                             total_usage: '',
                             left_quota: '',
+                            model_gpt3: '-',
+                            model_gpt4: '-',
                             status: '查询中...',
                         });
                     }

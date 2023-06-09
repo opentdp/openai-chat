@@ -25,8 +25,8 @@
                     <tr v-for="item,k in items">
                         <th scope="row">{{k+1}}</th>
                         <td scope="col">{{item.mask}}</td>
-                        <td scope="col">{{item.model_gpt3 ? 'Y' : 'N'}}</td>
-                        <td scope="col">{{item.model_gpt4 ? 'Y' : 'N'}}</td>
+                        <td scope="col">{{item.model_gpt3}}</td>
+                        <td scope="col">{{item.model_gpt4}}</td>
                         <td scope="col">{{item.access_until || item.status}}</td>
                         <td scope="col">{{item.hard_limit_usd}}</td>
                         <td scope="col">{{item.total_usage}}</td>
