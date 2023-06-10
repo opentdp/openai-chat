@@ -43,7 +43,7 @@ export default async () => {
                 this.items = this.items.filter(async item => {
                     return item.left_quota && item.left_quota > 0;
                 });
-                this.message = this.items.join('\n');
+                this.message = this.items.map(item => item.key).join('\n');
                 postMessage({ content: '清理完成' });
             },
         },
