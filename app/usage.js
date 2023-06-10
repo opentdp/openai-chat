@@ -40,7 +40,7 @@ export default async () => {
                 });
             },
             clear() {
-                this.items = this.items.filter(async item => {
+                this.items = this.items.filter(item => {
                     return item.left_quota && item.left_quota > 0;
                 });
                 this.message = this.items.map(item => item.key).join('\n');
