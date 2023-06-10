@@ -14,7 +14,7 @@ export default async () => {
             };
         },
         methods: {
-            submit() {
+            async submit() {
                 this.items = [];
                 // 获取密钥
                 this.message.split('\n').forEach(key => {
@@ -43,7 +43,7 @@ export default async () => {
                     Object.assign(item, res);
                 });
             },
-            clear() {
+            async clear() {
                 const text = this.validkeys.join('\n');
                 if (this.message != text) {
                     this.message = text;
