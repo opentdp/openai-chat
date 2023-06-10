@@ -9,17 +9,22 @@ export default async () => {
             };
         },
         created() {
-            window.addEventListener("unhandledrejection", event => {
-                event.preventDefault && event.preventDefault()
-                this.createMessage(event.reason)
+            window.addEventListener("unhandledrejection", e => {
+                this.createMessage({ content: e.reason, type: 'error' });
+                e.preventDefault && e.preventDefault();
             })
+            window.addEventListener('message', e => {
+                e.data.content && this.createMessage(e.data);
+            });
         },
         methods: {
-            createMessage(message) {
-                this.messages.push({ index: Date.now(), content: message })
+            createMessage(data) {
+                this.messages.push({
+                    index: Date.now(), type: 'success', ...data
+                });
             },
-            removeMessage(index) {
-                this.messages = this.messages.filter(m => m.index !== index)
+            removeMessage(idx) {
+                this.messages = this.messages.filter(m => m.index !== idx);
             }
         },
         template: tpl,

@@ -22,7 +22,8 @@
 </nav>
 
 <div class="d-grid gap-2 position-fixed top-0 end-0 z-3 p-3" v-if="messages.length > 0">
-    <div v-for="item in messages" :key="item.index" class="toast align-items-center show">
+    <div v-for="item in messages" :key="item.index" class="toast align-items-center show"
+        :class="{'text-bg-danger': item.type == 'error'}">
         <div class="d-flex">
             <div class="toast-body">{{ item.content }}</div>
             <button class="btn-close me-2 m-auto" @click="removeMessage(item.index)"></button>

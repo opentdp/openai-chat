@@ -25,15 +25,15 @@ export default {
                 }
                 throw new Error(r.statusText || '请求失败');
             }
-            return data
+            return data;
         })
     },
 
     async chat(messages, model, key) {
-        const data = { model: model || 'gpt-3.5-turbo', messages }
-        const resp = await this.fetch('/chat/completions', data, key)
+        const data = { model: model || 'gpt-3.5-turbo', messages };
+        const resp = await this.fetch('/chat/completions', data, key);
 
-        return resp.choices[0].message
+        return resp.choices[0].message;
     },
 
     async usage(key) {
