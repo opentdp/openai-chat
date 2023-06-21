@@ -26,6 +26,7 @@ export default async () => {
                             total_usage: '',
                             left_quota: '',
                             models_gpt: [],
+                            latest_gpt: '',
                             status: '查询中...',
                         });
                     }

@@ -62,6 +62,7 @@ export default {
             start_date: start_date,
             end_date: end_date,
             models_gpt,
+            latest_gpt: models_gpt.length ? models_gpt[models_gpt.length - 1] : '',
         };
     }
 
