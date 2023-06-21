@@ -30,7 +30,7 @@ export default {
     },
 
     async chat(messages, model, key) {
-        const data = { model: model || 'gpt-3.5-turbo', messages };
+        const data = { model: model || 'gpt-3.5-turbo-16k', messages };
         const resp = await this.fetch('/chat/completions', data, key);
 
         return resp.choices[0].message;
