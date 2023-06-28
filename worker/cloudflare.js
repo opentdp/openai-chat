@@ -19,6 +19,9 @@ async function github_proxy(request) {
         headers: {
             'User-Agent': request.headers.get('User-Agent'),
         },
+        eo: {
+            cacheKey: backend,
+        }
     });
 
     const headers = new Headers();
