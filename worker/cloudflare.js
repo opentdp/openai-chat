@@ -3,13 +3,13 @@
  * @url https://github.com/open-tdp/openai-chat
  */
 
-const GITHUB_URL = 'https://raw.githubusercontent.com/open-tdp/openai-chat/master';
+const BACKEND_PREFIX = 'https://raw.githubusercontent.com/open-tdp/openai-chat/master';
 
 async function github_proxy(request) {
-    const url = new URL(request.url);
+    const uObj = new URL(request.url);
 
-    let backend = GITHUB_URL + url.pathname;
-    if (url.pathname.endsWith('/')) {
+    let backend = BACKEND_PREFIX + uObj.pathname;
+    if (backend.endsWith('/')) {
         backend += 'index.html';
     }
 
@@ -21,6 +21,7 @@ async function github_proxy(request) {
     });
 
     const headers = new Headers();
+    headers.set('Backend-Url', backend);
     headers.set('Content-Type', file_type(backend));
     headers.set('Cache-Control', 'public, max-age=86400');
 
@@ -33,11 +34,11 @@ async function github_proxy(request) {
 function file_type(url) {
     const ext = url.split('?').shift().split('.').pop();
     const mines = {
-        'json': 'application/json',
-        'js': 'application/javascript',
-        'css': 'text/css',
-        'xml': 'text/xml',
-        'html': 'text/html',
+        'json': 'application/json; charset=utf-8',
+        'js': 'application/javascript; charset=utf-8',
+        'css': 'text/css; charset=utf-8',
+        'xml': 'text/xml; charset=utf-8',
+        'html': 'text/html; charset=utf-8',
         'webm': 'video/webm',
         'mp3': 'audio/mpeg',
         'mp4': 'video/mp4',
@@ -52,7 +53,7 @@ function file_type(url) {
     return mines[ext] || 'text/plain';
 }
 
-// esmodule
+// cf esmodule
 
 export default {
     async fetch(request, env) {
