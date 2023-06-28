@@ -1,6 +1,7 @@
 /**
- * @auther Rehiy
+ * 静态仓库托管 for EdgeOne Workers
  * @url https://github.com/open-tdp/openai-chat
+ * @author Rehiy
  */
 
 const BACKEND_PREFIX = 'https://raw.githubusercontent.com/open-tdp/openai-chat/master';
