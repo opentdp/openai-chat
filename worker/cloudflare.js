@@ -1,10 +1,10 @@
 /**
  * 静态仓库托管 for Cloudflare Workers
- * @url https://github.com/open-tdp/openai-chat
+ * @url https://github.com/opentdp/openai-chat
  * @author Rehiy
  */
 
-const BACKEND_PREFIX = 'https://raw.githubusercontent.com/open-tdp/openai-chat/master';
+const BACKEND_PREFIX = 'https://raw.githubusercontent.com/opentdp/openai-chat/master';
 
 async function github_proxy(request) {
     const uObj = new URL(request.url);
